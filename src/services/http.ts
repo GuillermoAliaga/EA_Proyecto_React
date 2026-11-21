@@ -27,7 +27,7 @@ export function refreshAccessToken(): Promise<string | null> {
       });
       if (!res.ok) return null;
       const data = await res.json();
-      accessToken = data.accessToken; 
+      accessToken = data.token; 
       return accessToken;
     } catch {
       return null;
@@ -72,4 +72,14 @@ export async function request<T>(
   }
   if (res.status === 204) return undefined as T;
   return res.json();
+if (res.status === 401) {
+    console.log('401 en', path, '| token en memoria:', Boolean(accessToken), '| respuesta:', await res.clone().text());
+  }
+
+  if (res.status === 401 && retry && !isAuthRoute) {
+    const token = await refreshAccessToken();
+    if (token) return request<T>(path, options, false);
+    onSessionExpired?.();
+  }
+  
 }

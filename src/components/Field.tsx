@@ -2,21 +2,19 @@ import type { ReactNode } from 'react';
 
 interface FieldProps {
   label: string;
+  name: string;
   error?: string;
-  hint?: string;
-  className?: string;
-  children: ReactNode;
+  help?: string;
+  children: ReactNode; // el input, select o textarea (con id igual a name)
 }
 
-// Una etiqueta + el input que le pasen como children + su mensaje de error.
-// Evita repetir el mismo bloque de HTML en cada campo de los formularios.
-export function Field({ label, error, hint, className, children }: FieldProps) {
+export function Field({ label, name, error, help, children }: FieldProps) {
   return (
-    <label className={className}>
-      {label}
+    <div className="field">
+      <label htmlFor={name}>{label}</label>
       {children}
-      {hint && <small className="hint">{hint}</small>}
-      {error && <small className="field-error">{error}</small>}
-    </label>
+      {help && <small>{help}</small>}
+      {error && <small role="alert">{error}</small>}
+    </div>
   );
 }

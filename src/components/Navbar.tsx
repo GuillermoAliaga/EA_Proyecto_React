@@ -9,8 +9,8 @@ export function Navbar() {
 
       {/* NavLink le pone la clase "active" al enlace de la página en la que estoy */}
       <nav>
-        <NavLink to="/authors">Autores</NavLink>
-        <NavLink to="/books">Libros</NavLink>
+        <NavLink to="/users">Usuarios</NavLink>
+        <NavLink to="/activities">Actividades</NavLink>
       </nav>
     </header>
   );

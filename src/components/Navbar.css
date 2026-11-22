@@ -13,7 +13,7 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  flex: 1; /* empuja el grupo de sesión al extremo derecho */
+  flex: 1; /* empuja el nombre del usuario a la derecha */
 }
 
 /* Botones de navegación */
@@ -79,4 +79,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.nav-session {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }

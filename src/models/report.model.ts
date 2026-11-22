@@ -26,6 +26,8 @@ export interface ReportInput {
   targetId: string;
   reason: ReportReason;
   description: string;
+  status?: ReportStatus;
+  adminNotes?: string;
 }
 
 // Al revisar (solo ADMIN): lo único editable

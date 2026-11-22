@@ -65,6 +65,13 @@
   outline-offset: 2px;
 }
 
+/* Nombre de usuario y botón de salir */
+.nav-session {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .nav-user {
   color: #9ca3af;
   font-size: 0.9rem;

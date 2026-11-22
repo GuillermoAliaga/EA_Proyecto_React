@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ActivitiesList } from './components/ActivityList';
+import { ActivitiesList } from './components/ActivitiesList';
 import { Layout } from './components/Layout';
 import { GuestRoute } from './components/GuestRoute';
 import { ProtectedRoute } from './components/ProtectedRoutes';
@@ -10,7 +10,7 @@ import { Chat } from './components/Chat';
 import { ActivityForm } from './components/ActivityForm';
 import { UsersList } from './components/UserList';
 import { UserForm } from './components/UserForm';
-import { ReportsList } from './components/ReportList';
+import { ReportsList } from './components/ReportsList';
 import { ReportForm } from './components/ReportForm';
 
 export function App() {

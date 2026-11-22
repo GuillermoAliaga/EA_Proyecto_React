@@ -2,57 +2,45 @@ import { useEffect } from 'react';
 
 interface ConfirmModalProps {
   open: boolean;
-  title?: string;
+  title: string;
   message: string;
   confirmText?: string;
   cancelText?: string;
+  busy?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
 export function ConfirmModal({
-  open,
-  title = '¿Estás seguro?',
-  message,
-  confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
-  onConfirm,
-  onCancel,
+  open, title, message,
+  confirmText = 'Confirmar', cancelText = 'Cancelar',
+  busy = false, onConfirm, onCancel,
 }: ConfirmModalProps) {
-  // useEffect con limpieza: mientras el modal está abierto escucho la tecla Escape.
-  // El return quita el listener cuando se cierra el modal (o se desmonta el componente)
+  // Escape cierra el modal
   useEffect(() => {
-    if (!open) {
-      return;
-    }
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onCancel();
-      }
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onCancel(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [open, onCancel]);
 
-  // Renderizado condicional: si no está abierto, el componente no pinta nada
-  if (!open) {
-    return null;
-  }
+  if (!open) return null;
 
   return (
-    <div className="overlay" onClick={onCancel}>
-      {/* stopPropagation: un clic dentro del modal no debe cerrarlo */}
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{title}</h2>
+    <div className="modal-backdrop" onClick={onCancel}>
+      <div
+        className="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 id="modal-title">{title}</h2>
         <p>{message}</p>
-        <div className="actions">
-          <button type="button" className="secondary" onClick={onCancel}>
-            {cancelText}
-          </button>
-          <button type="button" className="danger" onClick={onConfirm}>
-            {confirmText}
-          </button>
-        </div>
+        <button type="button" onClick={onCancel} disabled={busy}>{cancelText}</button>
+        <button type="button" onClick={onConfirm} disabled={busy}>
+          {busy ? 'Procesando…' : confirmText}
+        </button>
       </div>
     </div>
   );

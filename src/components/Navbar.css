@@ -1,0 +1,82 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #1f2937;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap; /* en pantallas pequeñas los botones pasan a otra línea */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1; /* empuja el grupo de sesión al extremo derecho */
+}
+
+/* Botones de navegación */
+.nav-link,
+.nav-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.nav-link {
+  color: #e5e7eb;
+  background: #374151;
+}
+
+.nav-link:hover {
+  background: #4b5563;
+}
+
+.nav-link:active,
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+/* NavLink añade la clase "active" a la ruta actual */
+.nav-link.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+/* Botón de salir, en rojo */
+.nav-btn--logout {
+  background: #dc2626;
+  color: #fff;
+}
+
+.nav-btn--logout:hover {
+  background: #b91c1c;
+}
+
+.nav-link:focus-visible,
+.nav-btn:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+/* Nombre de usuario y botón de salir */
+.nav-session {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-user {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

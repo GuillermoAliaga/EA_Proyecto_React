@@ -14,6 +14,18 @@ import { errorMessage, isAbort } from '../utils/api-error';
 
 const PAGE_SIZE = 10;
 
+const archiveButtonStyle = {
+  backgroundColor: '#6e7bef',
+  borderColor: '#6e7bef',
+  color: '#ffffff',
+};
+
+const deleteButtonStyle = {
+  backgroundColor: '#9c0707',
+  borderColor: '#9c0707',
+  color: '#ffffff',
+};
+
 type ConfirmAction =
   | { type: 'archive'; id: string; title: string }
   | { type: 'restore'; id: string; title: string }
@@ -399,6 +411,7 @@ export function ActivitiesList() {
                         {!a.deleted ? (
                           <button
                             type="button"
+                            style={archiveButtonStyle}
                             onClick={() => setConfirmAction({ type: 'archive', id: a._id, title: a.title })}
                           >
                             Archivar
@@ -414,6 +427,7 @@ export function ActivitiesList() {
 
                         <button
                           type="button"
+                          style={deleteButtonStyle}
                           onClick={() => setConfirmAction({ type: 'delete', id: a._id, title: a.title })}
                         >
                           Eliminar

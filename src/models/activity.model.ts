@@ -3,40 +3,71 @@ export const SUBCATEGORIES = ['BASKETBALL', 'RUNNING', 'ARCADE', 'TCG_BOARDGAMES
 export const MODALITIES = ['CASUAL', 'ORGANIZED'] as const;
 export const ACTIVITY_STATUSES = ['OPEN', 'FULL', 'COMPLETED', 'CANCELLED'] as const;
 
-export type Category = (typeof CATEGORIES)[number];
-export type Subcategory = (typeof SUBCATEGORIES)[number];
+export type Category = string;
+export type Subcategory = string;
 export type Modality = (typeof MODALITIES)[number];
 export type ActivityStatus = (typeof ACTIVITY_STATUSES)[number];
 
-export interface GeoPoint {
+export interface ActivityLocation {
   type: 'Point';
-  coordinates: [number, number]; 
+  coordinates: [number, number]; // [longitud, latitud]
+  addressName: string;
+  isStoreLocation: boolean;
+}
+
+export interface ActivityRoute {
+  distanceKm: number;
+  paceTarget?: string;
+  path: {
+    type: 'LineString';
+    coordinates: [number, number][];
+  };
+}
+
+export interface ActivitySchedule {
+  startTime: string;
+  endTime: string;
+}
+
+export interface ActivityCapacity {
+  minParticipants: number;
+  maxParticipants: number;
+}
+
+export interface ActivityPricing {
+  price: number;
+  prizeInfo?: string;
+}
+
+export interface ActivityParticipant {
+  userId: string;
+  name: string;
+  avatarUrl?: string;
+  joinedAt: string;
 }
 
 export interface Activity {
   _id: string;
+  creatorId: string | { _id: string; name: string; email?: string };
   title: string;
   description: string;
   category: Category;
   subcategory: Subcategory;
   modality: Modality;
   status: ActivityStatus;
-  address: string;
-  location: GeoPoint;
-  startTime: string;      
-  endTime: string;        
-  minParticipants: number;
-  maxParticipants: number;
-  price: number;
-  prize?: string;
-  participants: string[];  // ids (o User[] si la API los popula)
-  author?: string;         // id (o User si la API lo popula)
+  location: ActivityLocation;
+  route?: ActivityRoute;
+  schedule: ActivitySchedule;
+  capacity: ActivityCapacity;
+  pricing: ActivityPricing;
+  participants: ActivityParticipant[];
   deleted?: boolean;
+  deletedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
 export type ActivityInput = Omit<
   Activity,
-  '_id' | 'participants' | 'author' | 'deleted' | 'createdAt' | 'updatedAt'
+  '_id' | 'creatorId' | 'participants' | 'deleted' | 'deletedAt' | 'createdAt' | 'updatedAt'
 >;

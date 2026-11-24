@@ -23,8 +23,22 @@ interface PhotonFeature {
 }
 
 const DEFAULT_FALLBACK_CATEGORIES: CategoryItem[] = [
-  { name: 'SPORT', subcategories: ['BASKETBALL', 'RUNNING'] },
-  { name: 'LEISURE', subcategories: ['ARCADE', 'TCG_BOARDGAMES'] },
+  {
+    name: 'SPORT',
+    slug: 'SPORT',
+    subcategories: [
+      { name: 'BASKETBALL', slug: 'BASKETBALL' },
+      { name: 'RUNNING', slug: 'RUNNING' },
+    ],
+  },
+  {
+    name: 'LEISURE',
+    slug: 'LEISURE',
+    subcategories: [
+      { name: 'ARCADE', slug: 'ARCADE' },
+      { name: 'TCG_BOARDGAMES', slug: 'TCG_BOARDGAMES' },
+    ],
+  },
 ];
 
 const INITIAL = {
@@ -124,8 +138,8 @@ export function ActivityForm() {
           const firstCat = items[0];
           fill({
             ...values,
-            category: firstCat.name,
-            subcategory: firstCat.subcategories[0] ?? '',
+            category: firstCat.slug,
+            subcategory: firstCat.subcategories[0]?.slug ?? '',
           });
         }
       })
@@ -217,29 +231,27 @@ export function ActivityForm() {
     });
   };
 
-  // Subcategorías disponibles según la categoría elegida
   const currentCategoryObj = categoriesList.find(
-    (c) => c.name.toUpperCase() === values.category.toUpperCase(),
+    (c) => c.slug.toUpperCase() === values.category.toUpperCase(),
   );
   const availableSubcategories = currentCategoryObj?.subcategories ?? [];
 
-  // Comprobación extra por si en edición viene una combinación histórica o desincronizada
   const subcategoryMismatch =
     availableSubcategories.length > 0 &&
-    !availableSubcategories.some((s) => s.toUpperCase() === values.subcategory.toUpperCase());
+    !availableSubcategories.some((s) => s.slug.toUpperCase() === values.subcategory.toUpperCase());
 
-  const handleCategoryChange = (newCategory: string) => {
+  const handleCategoryChange = (newCategorySlug: string) => {
     const catObj = categoriesList.find(
-      (c) => c.name.toUpperCase() === newCategory.toUpperCase(),
+      (c) => c.slug.toUpperCase() === newCategorySlug.toUpperCase(),
     );
     const allowedSubs = catObj?.subcategories ?? [];
-    const nextSubcategory = allowedSubs.some((s) => s.toUpperCase() === values.subcategory.toUpperCase())
+    const nextSubcategory = allowedSubs.some((s) => s.slug.toUpperCase() === values.subcategory.toUpperCase())
       ? values.subcategory
-      : (allowedSubs[0] ?? '');
+      : (allowedSubs[0]?.slug ?? '');
 
     fill({
       ...values,
-      category: newCategory,
+      category: newCategorySlug,
       subcategory: nextSubcategory,
     });
   };
@@ -333,7 +345,7 @@ export function ActivityForm() {
             onChange={(e) => handleCategoryChange(e.target.value)}
           >
             {categoriesList.map((c) => (
-              <option key={c.name} value={c.name}>{c.name}</option>
+              <option key={c.slug} value={c.slug}>{c.name}</option>
             ))}
           </select>
         </Field>
@@ -351,7 +363,7 @@ export function ActivityForm() {
               <option value="">Sin subcategorías disponibles</option>
             )}
             {availableSubcategories.map((sub) => (
-              <option key={sub} value={sub}>{sub}</option>
+              <option key={sub.slug} value={sub.slug}>{sub.name}</option>
             ))}
           </select>
         </Field>

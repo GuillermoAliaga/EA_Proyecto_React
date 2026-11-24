@@ -17,6 +17,7 @@ export interface ListParams {
   subcategory?: string;
   reason?: string;
   targetType?: string;
+  showDeleted?: boolean;
 }
 
 // Equivalente al toHttpParams() de Angular: omite undefined, null y ''

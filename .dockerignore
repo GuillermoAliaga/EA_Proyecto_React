@@ -1,0 +1,16 @@
+node_modules
+dist
+.angular
+coverage
+
+# Repositorio y herramientas
+.git
+.github
+.vscode
+*.md
+Dockerfile
+.dockerignore
+
+# Variables de entorno
+.env
+.env.*

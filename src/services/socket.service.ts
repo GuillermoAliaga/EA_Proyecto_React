@@ -44,9 +44,10 @@ export interface SocketHandlers {
 export const chatRooms = {
   general: () => 'general',
   activity: (activityId: string) => `activity:${activityId}`,
-  direct: (userIdA: string, userIdB: string) => {
-    const [first, second] = [userIdA.toLowerCase(), userIdB.toLowerCase()].sort();
-    return `direct:${first}:${second}`;
+  direct: (userIdA?: string, userIdB?: string) => {
+  if (!userIdA || !userIdB) return '';
+  const [first, second] = [userIdA.toLowerCase(), userIdB.toLowerCase()].sort();
+  return `direct:${first}:${second}`;
   },
 };
 

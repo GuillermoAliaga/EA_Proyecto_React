@@ -328,6 +328,8 @@ export function ActivitiesList() {
                     typeof p === 'string' ? p === user._id : p.userId === user._id,
                   ),
               );
+              const creatorId = typeof a.creatorId === 'string' ? a.creatorId : a.creatorId?._id;
+              const isMine = Boolean(user) && creatorId === user?._id;
               const isFull = enrolledCount >= maxCount || a.status === 'FULL';
               const isUnavailable = isFull || a.status === 'COMPLETED' || a.status === 'CANCELLED';
 
@@ -461,6 +463,14 @@ export function ActivitiesList() {
                           Eliminar
                         </button>
                       </>
+                    )}
+                    {/* Denunciar: no en archivadas ni en mis propias actividades */}
+                    {user && !a.deleted && !isMine && (
+                      <Link
+                        to={`/reports/new?targetType=ACTIVITY&targetId=${a._id}&title=${encodeURIComponent(a.title)}`}
+                      >
+                        <button type="button">Denunciar</button>
+                      </Link>
                     )}
                   </div>
                 </article>

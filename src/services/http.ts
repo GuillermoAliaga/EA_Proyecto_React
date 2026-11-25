@@ -11,6 +11,7 @@ export class ApiError extends Error {
 // El access token vive solo en memoria (nunca en localStorage)
 let accessToken: string | null = null;
 export const setAccessToken = (t: string | null) => { accessToken = t; };
+export const getAccessToken = () => accessToken;
 
 let onSessionExpired: (() => void) | null = null;
 export const setOnSessionExpired = (fn: () => void) => { onSessionExpired = fn; };

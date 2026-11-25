@@ -38,7 +38,6 @@ export function ReportForm() {
   const { id } = useParams();
   const isReview = Boolean(id);
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
   const { showToast } = useToast();
   const [searchParams] = useSearchParams();
 

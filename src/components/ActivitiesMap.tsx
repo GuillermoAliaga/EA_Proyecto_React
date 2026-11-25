@@ -51,19 +51,21 @@ function FitMapBounds({ points }: { points: [number, number][] }) {
 }
 
 interface ActivitiesMapProps {
-  activities: Activity[];
-  currentUserId?: string;
-  isAdmin: boolean;
-  enrollingId: string | null;
-  onEnroll: (id: string) => void;
+    activities: Activity[];
+    currentUserId?: string;
+    isAdmin: boolean;
+    enrollingId: string | null;
+    onEnroll: (id: string) => void;
+    onUnenroll: (id: string) => void;
 }
 
 export function ActivitiesMap({
-  activities,
-  currentUserId,
-  isAdmin,
-  enrollingId,
-  onEnroll,
+    activities,
+    currentUserId,
+    isAdmin,
+    enrollingId,
+    onEnroll,
+    onUnenroll,
 }: ActivitiesMapProps) {
   const mappable = activities.filter((a) => isValidCoords(a.location?.coordinates));
 
@@ -124,21 +126,33 @@ export function ActivitiesMap({
                       <strong>{a.pricing?.price > 0 ? `${a.pricing.price} €` : 'Gratis'}</strong>
                     </div>
 
-                    {isJoined && (
-                      <span
-                        style={{
-                          marginTop: '0.25rem',
-                          padding: '0.2rem 0.5rem',
-                          borderRadius: '4px',
-                          backgroundColor: '#dcfce7',
-                          color: '#166534',
-                          fontSize: '0.8rem',
-                          fontWeight: 600,
-                          textAlign: 'center',
-                        }}
-                      >
-                        Ya estás inscrito
-                      </span>
+                   {isJoined && (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.4rem', marginTop: '0.25rem' }}>
+                        <span
+                          style={{
+                            padding: '0.2rem 0.5rem',
+                            borderRadius: '4px',
+                            backgroundColor: '#dcfce7',
+                            color: '#166534',
+                            fontSize: '0.8rem',
+                            fontWeight: 600,
+                          }}
+                        >
+                          Inscrito
+                        </span>
+
+                        {a.status !== 'COMPLETED' && a.status !== 'CANCELLED' && (
+                          <button
+                            type="button"
+                            className="danger"
+                            disabled={enrollingId === a._id}
+                            onClick={() => onUnenroll(a._id)}
+                            style={{ padding: '0.25rem 0.55rem', fontSize: '0.8rem' }}
+                          >
+                            {enrollingId === a._id ? 'Saliendo…' : 'Desapuntarme'}
+                          </button>
+                        )}
+                      </div>
                     )}
 
                     {canEnroll && (

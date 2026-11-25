@@ -23,16 +23,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    setOnSessionExpired(clearSession);
-    (async () => {
-      const token = await refreshAccessToken();      // POST /auth/refresh con la cookie
+  setOnSessionExpired(clearSession);
+
+  (async () => {
+    try {
+
+      const token = await refreshAccessToken();
+
       if (token) {
-        try { setUser(await request<User>('/users/me')); }
-        catch { clearSession(); }
+      const response = await request<{ user: User }>('/users/me');
+      setUser(response.user);
       }
+    } catch (error) {
+      console.error('ERROR restaurando sesión:', error);
+      clearSession();
+    } finally {
       setLoading(false);
-    })();
-  }, [clearSession]);
+    }
+  })();
+}, [clearSession]);
 
   const login = async (email: string, password: string) => {
     const data = await request<{ token: string; user: User }>('/auth/login', {

@@ -18,6 +18,9 @@ export const activityService = {
   enroll: (id: string) =>
     request<Activity>(`/activities/${id}/participants`, { method: 'POST' }),
 
+  unenroll: (id: string) =>
+    request<Activity>(`/activities/${id}/participants`, { method: 'DELETE' }),
+
   softDelete: (id: string) =>
     request<void>(`/activities/${id}/soft-delete`, { method: 'PATCH' }),
 

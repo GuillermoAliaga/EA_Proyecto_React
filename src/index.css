@@ -496,3 +496,40 @@ label.checkbox {
   font-size: 0.9rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
+
+/* Mapa interactivo en Home */
+.activities-map-wrapper {
+  height: 380px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  z-index: 1;
+}
+
+.activities-map-wrapper .leaflet-container {
+  height: 100%;
+  width: 100%;
+  font-family: inherit;
+}
+
+/* Atenuar brillo de los tiles de OpenStreetMap en modo oscuro */
+[data-theme='dark'] .activities-map-wrapper .leaflet-tile-pane {
+  filter: invert(100%) hue-rotate(180deg) brightness(92%) contrast(90%);
+}
+
+[data-theme='dark'] .activities-map-wrapper .leaflet-popup-content-wrapper,
+[data-theme='dark'] .activities-map-wrapper .leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+[data-theme='dark'] .activities-map-wrapper .leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--muted);
+}
+
+[data-theme='dark'] .activities-map-wrapper .leaflet-control-attribution a {
+  color: var(--primary);
+}

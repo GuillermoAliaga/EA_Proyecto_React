@@ -103,6 +103,19 @@ export function ActivitiesList() {
     }
   };
 
+  const handleUnenroll = async (id: string) => {
+    setEnrollingId(id);
+    try {
+      await activityService.unenroll(id);
+      showToast('Has cancelado tu inscripción en la actividad');
+      reload();
+    } catch (err) {
+      showToast(errorMessage(err));
+    } finally {
+      setEnrollingId(null);
+    }
+  };
+
   const handleConfirmAction = async () => {
     if (!confirmAction) return;
     setBusyModal(true);
@@ -374,18 +387,31 @@ export function ActivitiesList() {
                     {user && !isAdmin && !showArchived && (
                       <>
                         {isJoined ? (
-                          <span
-                            style={{
-                              padding: '0.35rem 0.75rem',
-                              backgroundColor: '#dcfce7',
-                              color: '#166534',
-                              borderRadius: '4px',
-                              fontSize: '0.9rem',
-                              fontWeight: 500,
-                            }}
-                          >
-                            Inscrito
-                          </span>
+                          <>
+                            <span
+                              style={{
+                                padding: '0.35rem 0.75rem',
+                                backgroundColor: '#dcfce7',
+                                color: '#166534',
+                                borderRadius: '4px',
+                                fontSize: '0.9rem',
+                                fontWeight: 500,
+                              }}
+                            >
+                              Inscrito
+                            </span>
+
+                            {a.status !== 'COMPLETED' && a.status !== 'CANCELLED' && (
+                              <button
+                                type="button"
+                                className="danger"
+                                disabled={enrollingId === a._id}
+                                onClick={() => handleUnenroll(a._id)}
+                              >
+                                {enrollingId === a._id ? 'Saliendo…' : 'Desapuntarme'}
+                              </button>
+                            )}
+                          </>
                         ) : (
                           !isUnavailable &&
                           a.status === 'OPEN' && (

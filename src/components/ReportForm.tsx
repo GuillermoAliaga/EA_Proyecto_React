@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { TARGET_TYPES, REPORT_REASONS, REPORT_STATUSES } from '../models';
 import type { ReportInput, ReportReviewInput, TargetType, ReportReason, ReportStatus } from '../models';
 import { reportService } from '../services/report.service';
-import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { useForm } from '../hooks/useForm';
 import { Field } from '../components/Field';

@@ -7,5 +7,6 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://ea2-api.upc.edu'
+  apiUrl: 'https://ea2-api.upc.edu',
+  socketUrl: 'https://ea2-api.upc.edu',
 };

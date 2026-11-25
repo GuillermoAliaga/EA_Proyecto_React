@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import { ActivitiesList } from './components/ActivitiesList';
 import { Layout } from './components/Layout';
 import { GuestRoute } from './components/GuestRoute';
@@ -15,35 +16,37 @@ import { ReportForm } from './components/ReportForm';
 
 export function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route element={<GuestRoute />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+    <ThemeProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
 
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/activities" element={<ActivitiesList />} />
-          <Route path="/reports/new" element={<ReportForm />} />
-        </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/activities" element={<ActivitiesList />} />
+            <Route path="/reports/new" element={<ReportForm />} />
+          </Route>
 
-        <Route element={<ProtectedRoute roles={['ADMIN', 'STORE_HOST']} />}>
-          <Route path="/activities/new" element={<ActivityForm />} />
-        </Route>
+          <Route element={<ProtectedRoute roles={['ADMIN', 'STORE_HOST']} />}>
+            <Route path="/activities/new" element={<ActivityForm />} />
+          </Route>
 
-        <Route element={<ProtectedRoute roles={['ADMIN']} />}>
-          <Route path="/users" element={<UsersList />} />
-          <Route path="/users/new" element={<UserForm />} />
-          <Route path="/users/:id/edit" element={<UserForm />} />
-          <Route path="/activities/:id/edit" element={<ActivityForm />} />
-          <Route path="/reports" element={<ReportsList />} />
-          <Route path="/reports/:id/edit" element={<ReportForm />} />
-        </Route>
+          <Route element={<ProtectedRoute roles={['ADMIN']} />}>
+            <Route path="/users" element={<UsersList />} />
+            <Route path="/users/new" element={<UserForm />} />
+            <Route path="/users/:id/edit" element={<UserForm />} />
+            <Route path="/activities/:id/edit" element={<ActivityForm />} />
+            <Route path="/reports" element={<ReportsList />} />
+            <Route path="/reports/:id/edit" element={<ReportForm />} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Route>
-    </Routes>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }

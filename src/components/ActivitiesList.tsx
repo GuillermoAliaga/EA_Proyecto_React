@@ -187,7 +187,7 @@ export function ActivitiesList() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <div>
           <h1 style={{ margin: 0 }}>Actividades</h1>
-          <small style={{ color: '#4b5563' }}>Total: {totalDocs}</small>
+          <small style={{ color: 'var(--muted)' }}>Total: {totalDocs}</small>
         </div>
         {canPublishActivities && (
           <Link to="/activities/new">
@@ -258,13 +258,13 @@ export function ActivitiesList() {
             flexWrap: 'wrap',
             padding: '0.5rem 0.75rem',
             marginBottom: '1rem',
-            border: '1px solid #e5e7eb',
+            border: '1px solid var(--border)',
             borderRadius: '6px',
-            backgroundColor: '#f9fafb',
-            color: '#111827',
+            backgroundColor: 'var(--surface-alt)',
+            color: 'var(--text)',
           }}
         >
-          <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', cursor: 'pointer' }}>
+          <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}>
             <input
               type="checkbox"
               checked={allSelected}
@@ -278,6 +278,7 @@ export function ActivitiesList() {
               {!showArchived && (
                 <button
                   type="button"
+                  style={archiveButtonStyle}
                   onClick={() => setConfirmAction({ type: 'bulk-archive', ids: selectedIds })}
                 >
                   Archivar seleccionadas ({selectedIds.length})
@@ -285,6 +286,7 @@ export function ActivitiesList() {
               )}
               <button
                 type="button"
+                style={deleteButtonStyle}
                 onClick={() => setConfirmAction({ type: 'bulk-delete', ids: selectedIds })}
               >
                 Eliminar seleccionadas ({selectedIds.length})
@@ -320,11 +322,11 @@ export function ActivitiesList() {
                 <article
                   key={a._id}
                   style={{
-                    border: '1px solid #d1d5db',
+                    border: '1px solid var(--border)',
                     borderRadius: '8px',
                     padding: '1rem',
-                    backgroundColor: '#ffffff',
-                    color: '#111827',
+                    backgroundColor: 'var(--surface)',
+                    color: 'var(--text)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem' }}>
@@ -340,7 +342,7 @@ export function ActivitiesList() {
                       )}
                       <div>
                         <h2 style={{ margin: '0 0 0.25rem 0' }}>{a.title}</h2>
-                        <small style={{ color: '#4b5563' }}>
+                        <small style={{ color: 'var(--muted)' }}>
                           {a.category} · {a.subcategory} · {a.modality} · Estado: <strong>{a.status}</strong>
                           {a.deleted ? ' · (ARCHIVADA)' : ''}
                         </small>
@@ -353,17 +355,17 @@ export function ActivitiesList() {
 
                   <p style={{ margin: '0.75rem 0' }}>{a.description}</p>
 
-                  <div style={{ fontSize: '0.9rem', color: '#374151', display: 'grid', gap: '0.25rem' }}>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--muted)', display: 'grid', gap: '0.25rem' }}>
                     <div>
-                      <strong>Ubicación:</strong> {a.location?.addressName ?? 'Sin dirección'}
+                      <strong style={{ color: 'var(--text)' }}>Ubicación:</strong> {a.location?.addressName ?? 'Sin dirección'}
                     </div>
                     <div>
-                      <strong>Horario:</strong>{' '}
+                      <strong style={{ color: 'var(--text)' }}>Horario:</strong>{' '}
                       {a.schedule?.startTime ? new Date(a.schedule.startTime).toLocaleString() : '—'}
                       {a.schedule?.endTime ? ` — ${new Date(a.schedule.endTime).toLocaleString()}` : ''}
                     </div>
                     <div>
-                      <strong>Plazas:</strong> {enrolledCount} / {maxCount}
+                      <strong style={{ color: 'var(--text)' }}>Plazas:</strong> {enrolledCount} / {maxCount}
                     </div>
                   </div>
 

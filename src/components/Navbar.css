@@ -81,8 +81,15 @@
   white-space: nowrap;
 }
 
-.nav-session {
-  display: flex;
+/* Botón de cambio de tema */
+.nav-btn--theme {
+  display: inline-flex;
   align-items: center;
-  gap: 24px;
+  gap: 6px;
+  color: #e5e7eb;
+  background: #374151;
+}
+
+.nav-btn--theme:hover {
+  background: #4b5563;
 }

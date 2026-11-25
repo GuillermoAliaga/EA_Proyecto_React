@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ThemeToggle } from './ThemeToggle';
 import './Navbar.css';
 
 export function Navbar() {
@@ -46,15 +47,18 @@ export function Navbar() {
         )}
       </nav>
 
-      {/* Sesión: nombre y botón de salir, a la derecha del todo */}
-      {user && (
-        <div className="nav-session">
-          <span className="nav-user">{user.name}</span>
-          <button type="button" className="nav-btn nav-btn--logout" onClick={onLogout}>
-            Salir
-          </button>
-        </div>
-      )}
+      {/* Zona derecha: selector de tema (siempre visible) y sesión si está logueado */}
+      <div className="nav-session">
+        <ThemeToggle />
+        {user && (
+          <>
+            <span className="nav-user">{user.name}</span>
+            <button type="button" className="nav-btn nav-btn--logout" onClick={onLogout}>
+              Salir
+            </button>
+          </>
+        )}
+      </div>
     </header>
   );
 }
